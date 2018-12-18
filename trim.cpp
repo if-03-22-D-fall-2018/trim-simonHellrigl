@@ -14,26 +14,55 @@
  #include <string.h>
  #include "trim.h"
 
+ bool is_string_empty(int end);
  void trim(const char* source, char* trimmed_string)
  {
-   
+   int start=0;
+   int end=strlen(source)-1;
 
+   get_text_parts(source, &end, &start, 0);   //Zero means that he uses the first part
+   get_text_parts(source, &end, &start, 1);   //One means that he uses the end  of the string
 
- }
-
- static void get_start(const char* source, int *begin)
- {
-   while (source[*begin] == ' ')
+   if (is_string_empty(end))
    {
-     *begin = *begin+1;
+     strcpy(trimmed_string, "");
    }
 
- }
- static void get_end(const char* source, int *end, int *begin)
- {
-   while (*end>=*begin && source[*end]==' ')
+   int counter = 0;
+
+   for (int i = start; i < end+1; i++)
    {
-     *end = *end-1;
+    trimmed_string[counter]=source[i];
+    counter++;
+   }
+
+
+
+
+
+
+ }
+
+ bool is_string_empty(int end)
+ {
+   return (end <= 0);
+ }
+
+ static void get_text_parts(const char* source, int *end, int *begin, int operationType)
+ {
+   if (operationType == 0)
+   {
+     while (source[*begin] == ' ')
+     {
+       *begin = *begin+1;
+     }
+   }
+   else
+   {
+     while (*end>=*begin && source[*end]==' ')
+     {
+       *end = *end-1;
+     }
    }
 
  }
